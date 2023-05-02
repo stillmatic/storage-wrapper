@@ -90,7 +90,7 @@ export async function del(blobUrls, options) {
         try {
             const headData = await s3.send(new HeadObjectCommand(headParams));
             const headToken = headData.Metadata && headData.Metadata['x-read-write-token'];
-            if (headToken && headToken === token) {
+            if ((headToken && headToken === token) || (!headToken)) {
                 await s3.send(new DeleteObjectCommand(headParams));
                 return headData.Metadata;
             } else {
@@ -145,6 +145,7 @@ export async function list(options) {
 
         const blobMetadata = await Promise.all(blobs);
 
+        const accountID = process.env.AWS_ACCOUNT_ID || "";
         const result = {
             blobs: blobMetadata.map((metadata, index) => {
                 return {

@@ -1,4 +1,4 @@
-import { head, put } from './index.js';
+import { head, put, list, del } from './index.js';
 import { config } from 'dotenv';
 config();
 
@@ -12,6 +12,13 @@ async function test() {
         // test head function
         const headResult = await head(url);
         console.log(headResult);
+        // test list function
+        const listResult = await list();
+        console.log(listResult);
+        // test delete
+        const deleteResult = await del([url]);
+        console.log(deleteResult);
+
     } catch (err) {
         console.error(err);
     }
