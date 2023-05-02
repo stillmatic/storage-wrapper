@@ -3,13 +3,13 @@
 Want to use a super simple API to upload random blobs of data? Here you go!
 
 ```javascript
-        const pathname = 'test.txt';
-        const body = 'Hello, world!';
-        const options = { access: 'public' };
-        const { url } = await put(pathname, body, options);
+const pathname = 'test.txt';
+const body = 'Hello, world!';
+const options = { access: 'public' };
+const { url } = await put(pathname, body, options);
 ```
 
-Yay! 
+Yay! Your url is public and immediately referrable, it's got a random unguessable URL.
 
 ## How it works
 
@@ -41,3 +41,5 @@ I guess I'll also track your usage so I can bill you.
 yes? no? If you give me enough money I'll replicate across [multiple regions](https://developers.cloudflare.com/r2/buckets/data-location/#location-hints) by creating multiple buckets. Essentially pick a primary region, write there first, when that's successful, copy the object into your other buckets.
 
 oh, actually if you are already running on the edge in a cloudflare worker, then the default region that a new bucket gets created in would be the caller's region. so I guess we would have to alter the primary region per request, essentially run our own cloudflare worker that first writes to its location then creates a deferred job to replicate to other regions. ok, a bit more complexity, I can see why that might be cool.
+
+nb: after reading the vercel docs super closely, I don't think that's true, I literally think that it's just a single region lol.
